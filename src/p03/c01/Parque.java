@@ -41,14 +41,14 @@ public class Parque implements IParque{
 	
 	
 	@Override
-	public synchronized void salirDelParque(String puerta){
+	public synchronized void salirDelParque(String puerta) throws InterruptedException {
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		comprobarAntesDeSalir();
+		comprobarAntesDeSalir(puerta);
 				
 		// Decrementamos el contador total y el individual
 		contadorPersonasTotales--;		
@@ -99,10 +99,11 @@ public class Parque implements IParque{
 		
 	}
 
-	protected void comprobarAntesDeSalir(){
-		//
-		// TODO
-		//
+	protected void comprobarAntesDeSalir(String puerta) throws InterruptedException {
+		while (contadorPersonasTotales == AFORO_MIN ||
+				contadoresPersonasPuerta.get(puerta) == AFORO_MIN) {
+			wait();
+		}
 	}
 
 
