@@ -5,8 +5,7 @@ import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-
-	// TODO 
+	private static final int AFORO_MAX = 50;
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
@@ -18,7 +17,7 @@ public class Parque implements IParque{
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){	
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
@@ -42,12 +41,9 @@ public class Parque implements IParque{
 		
 	}
 	
-	// 
-	// TODO Método salirDelParque
-	//
 	
 	@Override
-	public void salirDelParque(String puerta){		// TODO
+	public synchronized void salirDelParque(String puerta){
 		
 		
 		// TODO
