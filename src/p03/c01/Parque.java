@@ -46,6 +46,15 @@ public class Parque implements IParque{
 	// TODO Método salirDelParque
 	//
 	
+	@Override
+	public void salirDelParque(String puerta){		// TODO
+		
+		
+		// TODO
+		
+	}
+	
+	
 	
 	private void imprimirInfo (String puerta, String movimiento){
 		System.out.println(movimiento + " por puerta " + puerta);
