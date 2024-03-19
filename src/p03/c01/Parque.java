@@ -52,7 +52,10 @@ public class Parque implements IParque{
 		}
 		
 		// Comprobamos que se puede salir
-		comprobarAntesDeSalir(puerta);
+		comprobarAntesDeSalir();
+		
+//		// Si queremos comprobar que se puede salir obligando a salir por la misma puerta de entrada
+//		comprobarAntesDeSalir(puerta);
 				
 		// Decrementamos el contador total y el individual
 		contadorPersonasTotales--;		
@@ -105,13 +108,22 @@ public class Parque implements IParque{
 		
 	}
 
-	protected void comprobarAntesDeSalir(String puerta) throws InterruptedException {
-		// Para salir es necesario que el aforo total y el de la puerta sean mayores que el mínimo 
-		while (contadorPersonasTotales == AFORO_MIN ||
-				contadoresPersonasPuerta.get(puerta) == AFORO_MIN) {
+	// Si permitimos la salida por cualquier puerta, permitiendo valores negativos intermedios en las puertas
+	protected void comprobarAntesDeSalir() throws InterruptedException {
+		// Para salir es necesario que el aforo total sea mayor que el mínimo 
+		while (contadorPersonasTotales == AFORO_MIN) {
 			wait();
 		}
-	}
+	}	
+	
+//	// Alternativa si queremos obligar a que la puerta de salida sea la misma que la de entrada
+//	protected void comprobarAntesDeSalir(String puerta) throws InterruptedException {
+//		// Para salir es necesario que el aforo total y el de la puerta sean mayores que el mínimo 
+//		while (contadorPersonasTotales == AFORO_MIN ||
+//				contadoresPersonasPuerta.get(puerta) == AFORO_MIN) {
+//			wait();
+//		}
+//	}
 
 
 }
