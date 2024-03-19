@@ -18,7 +18,7 @@ public class Parque implements IParque{
 
 
 	@Override
-	public synchronized void entrarAlParque(String puerta){	
+	public synchronized void entrarAlParque(String puerta) throws InterruptedException{	
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
@@ -91,10 +91,12 @@ public class Parque implements IParque{
 		
 	}
 
-	protected void comprobarAntesDeEntrar(){
-		//
-		// TODO
-		//
+	protected void comprobarAntesDeEntrar() throws InterruptedException {
+
+		while (contadorPersonasTotales == AFORO_MAX) {
+			wait();
+		}
+		
 	}
 
 	protected void comprobarAntesDeSalir(){
