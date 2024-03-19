@@ -5,8 +5,8 @@ import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-	private static final int AFORO_MAX = 50;
-	private static final int AFORO_MIN = 0;
+	private static final int AFORO_MAX = 50; //Aforo máximo
+	private static final int AFORO_MIN = 0; //Aforo mínimo
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
@@ -25,6 +25,7 @@ public class Parque implements IParque{
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
+		//Comprobamos que se puede entrar
 		comprobarAntesDeEntrar();
 				
 		// Aumentamos el contador total y el individual
@@ -34,8 +35,10 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
+		//Comprobamos las invariantes
 		checkInvariante();
 		
+		//Notificamos a los otros hilos
 		notifyAll();
 	}
 	
@@ -48,6 +51,7 @@ public class Parque implements IParque{
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
+		// Comprobamos que se puede salir
 		comprobarAntesDeSalir(puerta);
 				
 		// Decrementamos el contador total y el individual
@@ -57,8 +61,10 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Salida");
 		
+		// Comprobamos las invariantes
 		checkInvariante();
 		
+		// Notificamos a los demás hilos
 		notifyAll();
 	}
 	
@@ -92,7 +98,7 @@ public class Parque implements IParque{
 	}
 
 	protected void comprobarAntesDeEntrar() throws InterruptedException {
-
+		// Para entrar es necesario que el aforo sea inferior al máximo
 		while (contadorPersonasTotales == AFORO_MAX) {
 			wait();
 		}
@@ -100,6 +106,7 @@ public class Parque implements IParque{
 	}
 
 	protected void comprobarAntesDeSalir(String puerta) throws InterruptedException {
+		// Para salir es necesario que el aforo total y el de la puerta sean mayores que el mínimo 
 		while (contadorPersonasTotales == AFORO_MIN ||
 				contadoresPersonasPuerta.get(puerta) == AFORO_MIN) {
 			wait();
